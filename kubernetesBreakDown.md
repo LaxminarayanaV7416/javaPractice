@@ -1,5 +1,5 @@
 ## what is kubernetes
-kubernetes is an container orchestration tool, developed by google and helps you manage containers in various deployment environments. due to microservice thirst have gave given birth to the kubernetes. [Video Link](https://www.youtube.com/watch?v=X48VuDVv0do)
+kubernetes is an container orchestration tool, developed by google and helps you manage containers in various deployment environments. due to microservice thirst have gave given birth to the kubernetes. [Video Link](https://www.youtube.com/watch?v=X48VuDVv0do) and [GitLab Link For files](https://gitlab.com/nanuchi/youtube-tutorial-series/-/tree/master)
 #### features of Kubernetes
 * High Availability
 * Scalability
@@ -117,9 +117,48 @@ use the above things using environmental variables since kubernets ingests this 
 
 
 ##  helm package manager
-## handling volumes 
-## stateful apps
+Helm package manager is nothing but kind of similar to docker hub but this is the kubernetes hub where we can find the all yaml configurations for most commonly used deployments like postgres, airflow, mongo, elastic search and more.
 
+#### Folder stucture of Helm charts
+Main folder/
+    - Chart.yaml - this contains meta information about the chart we are trying to create
+    - values.yaml - this contains values which are used inside the service or deployment yaml configuration similar to jinja templating tag
+    - charts/ - this directory will have all the dependecies if these are having dependecies
+    - templates/ - this directory contains the templates reside
+* to install helm we will do ```$ helm install <chartname>```
+    - once we do this the values will be injected and default values are present they will be overriden if the values are defines in values.yaml
+    - we can also pass the our own yaml which will pick the values from our values passed and merge with values.yaml and perform deployment (this creates the .Values file). ```$ helm install --values=my-values.yaml <chartname>```
+
+
+## handling volumes
+* This is where the persistent data should be going, this can be external or cloud or we can setup inhouse one. its similar to the volumes in docker container. This can be directory as well where we can write this is called as persistent volume. NOTE: PersistentVolumes are not namespaced this means they are accessible by all namespaces and pods across the cluster. [Links to see all volumes](https://kubernetes-docsy-staging.netlify.app/docs/concepts/storage/volumes/)
+* Single pod can use multiple types of volumes at onetime.
+* Storage class provisions persistent volumes dynamically.
+
+## stateful apps
+* Stateful Applications are used manily for the databases likes mongoDB, ElasticSearch, Postgres and more
+* Stateful applications are deployed using the StatefulSet deployment type.
+* difference between statefulset vs deployment is statefulset deployed will maintain sticky identity and created from same specification but what happens is that assume that we have 3 replicas there will be master pod which will have only write access and rest of the pods will have read only access and synchronousration is very simple between the 3 replica pods where the read replicas will have the same pod identity thats what is difficult. new replica will be actually the clone the state from the previous replica only and acquire its state.
+* NOTE : Use the persistent volume still in case of the statefulset also.
+* Learn more about pod identifier in the statefulset names.
+ 
+## Kinds of kubernetes types
+1. deployment
+2. service
+3. PersistentVolume
+4. ConfigMap
+5. Secret
+6. PersistentVolumeClaim
+7. StorageClass
+8. StatefulSet
+9. Ingress
+
+#### Types of Kubernetes services
+Service will maintain the static IP for replicated pods, alos these act as load balancers and loosely couple them for communication within the pods for both internal and external services.
+* LoadBalancer Service - Load balancer service type is extension of Node Port service type which is more secure since we are using reverse proxy technique by attaching this to the external load balancer.
+* Headless Service - if the client want to connect to pod directly and not go through the service since service might redirect to another pod because of its load balancer nature. so these will used in scenarios of StatefulSet deployment and how we achieved this service is by simply assiging the ClusterIP in service yaml file to None.
+* ClusterIP Service - is also known as internal IP address so the services which are build using the clusterIP will only be accessible by the internal pods or within the cluster.
+* NodePort Service - this will enable the External traffic access to fixed port on each worker node and its range is 30000 to 32767 (not so secure than people started using load balancer)
 
 
 ## Miscellenous Linux commands
