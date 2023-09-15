@@ -166,3 +166,9 @@ Service will maintain the static IP for replicated pods, alos these act as load 
     - The above command will convert the text value-to-encode-in-base-64 into base64 format the result is dmFsdWUtdG8tZW5jb2RlLWluLWJhc2UtNjQ=
 * $ echo -n 'dmFsdWUtdG8tZW5jb2RlLWluLWJhc2UtNjQ=' | base64 --decode
     - The above command is used to convert the base64 to the normal text format
+
+
+#### Docker stuff links
+* [Difference between docker image types](https://medium.com/swlh/alpine-slim-stretch-buster-jessie-bullseye-bookworm-what-are-the-differences-in-docker-62171ed4531d)
+* [Docker CheatSheet](https://dockerlabs.collabnix.com/docker/cheatsheet/)
+* [Docker compose cheatsheet](https://collabnix.com/docker-compose-cheatsheet/)
