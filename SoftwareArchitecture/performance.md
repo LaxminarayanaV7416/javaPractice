@@ -117,7 +117,13 @@ Approaches to solve the network latency - We cannot reduce the connection creati
 
 - A contention is a conflict when two or more programs try to use the same resource or setting at the same time. With a network, a contention is when two or more computers try to access the same file at the same time. to avoid contention we use the volatile varaibles in multiprocessing systems.
 - Disk is biggest source of contention for example databases uses or perform alot of Disk IO operations whcih are main reason for contention.
-- 
+- We can use RAID disks which allows parallel access to disks in multiple disks for same data which is kind of parallel way of accessing.
+- Thread pool size is usually we have to decide based on the number of threads we require to handle a backend server and we will have to assume on linear way in best case possible that each thread will be able to support a connection so out connection pool size will also be equal to thread pool size, that means if we have 100 threads then we can process like 100 connections per second, but this is not suffieicnt its a general assumption but in real world scenario it will be like we will have a database connection pool from backend server will eventaully keep certain threads busy to maintain the connection with database. thus we can conclude that connection pool of users is always less than or equal to thread pool size of system.
+
+- Minimize Lock Contention:
+    1. to reduce the lock duration we usually move out the code out of synchronorization block, that doesnt require a lock (especially an IO)
+    2. Lock splitting: split lockl code into lower granularity such that it will processed on two locks and duration on which these locks will be held is also reduceed.
+    3. Lock Stripping: Split locks for each partition of data like in concurrent hashmap.
 
 -------------------------------
 
