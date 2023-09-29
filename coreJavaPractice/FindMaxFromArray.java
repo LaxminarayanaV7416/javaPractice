@@ -1,3 +1,5 @@
+package coreJavaPractice;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +13,7 @@ public class FindMaxFromArray{
     }
 
     public static int getMax(Integer[] inp){
-        ArrayList<Integer> newArray = new ArrayList<Integer>(Arrays.asList(inp));
+        List<Integer> newArray = new ArrayList<Integer>(Arrays.asList(inp));
         Integer maxInt = 0;
         for(Integer i : newArray){
             if(i>maxInt){
@@ -20,8 +22,5 @@ public class FindMaxFromArray{
         }
         return maxInt;
     }
-
-    
-
 
 }
