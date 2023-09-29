@@ -47,9 +47,29 @@ Reasons for queue build up
 #### Concurrency
 > we will look only on solving the issues related to serial request processing and concurrent request processing (parallel request processing)
 - Locking
-    - Pessimistic locking
-    - Optimistic Locking
-- Coherence - It defines the behavior of reads and writes to a single address location, these is caused by systems like databases which does require some lock to maintain the state of the application and consistent to all computers who are accessing it.
+    - Pessimistic locking - fetch the shared data and lock it, then we process this data and update the data with latest data and release the lock. this pessimisistic locking can be seem in database updates like we acquire a connection we do all the Updates and later we commit it this is kind of pessimistic locking.
+    - Optimistic Locking - in optimistic locking the duration we hold the lock is very small, and how this works is we dont take any lock but query the data and perfrom our calculations that is processing the data and later we willl try to update the data to where before executing the update we acquire lock and do the update and if the update is success we commit and release lock, if failed we retry from starting.
+
+
+
+> Pessimistic locking and optimistic locking are two different strategies used in database management systems and concurrent programming to handle situations where multiple users or processes may access and modify shared data concurrently. These strategies help ensure data consistency and prevent conflicts. Here's an overview of both approaches:
+
+- Pessimistic Locking:
+
+    * Pessimistic locking is a strategy where a resource (e.g., a database record) is locked by one user or process to prevent others from accessing or modifying it until the lock is released.
+    * When a user or process requests a lock on a resource, it is granted exclusively to that requester, and other requesters must wait until the lock is released.
+    * Pessimistic locking is typically used in scenarios where conflicts or data inconsistency must be avoided at all costs, and the likelihood of contention (multiple users trying to access the same resource simultaneously) is high.
+    * It can lead to potential performance bottlenecks, especially in systems with high contention, as it can cause delays for other users who are waiting for the locked resource.
+- Optimistic Locking:
+
+    * Optimistic locking is a strategy where multiple users or processes are allowed to read and possibly update a resource simultaneously, but conflicts are detected and resolved when attempting to save changes.
+    * It assumes that conflicts are rare, and most operations will not result in conflicts. Instead of locking, a version or timestamp is associated with the resource.
+    * When a user or process tries to save changes, the system checks if the version or timestamp of the resource matches what was initially read. If it doesn't match, it means another user has modified the resource, and a conflict resolution mechanism (e.g., rolling back changes, merging changes, notifying the user, or prompting for manual resolution) is triggered.
+    * Optimistic locking is suitable for scenarios where conflicts are infrequent, and the overhead of locking and blocking concurrent access would be too costly in terms of performance and user experience.
+In summary, pessimistic locking prevents concurrent access to a resource by locking it exclusively for one user or process at a time, while optimistic locking allows multiple users or processes to access a resource concurrently but detects and resolves conflicts during the save/update phase. The choice between these two locking strategies depends on the specific requirements of the application, the expected concurrency, and the tolerance for conflicts and performance implications.
+
+
+- Coherence - It defines the behavior of reads and writes to a single address location, these is caused by systems like databases which does require some lock to maintain the state of the application and consistent to all computers who are accessing it. 
 - queuing 
 
 #### Caching
@@ -124,6 +144,10 @@ Approaches to solve the network latency - We cannot reduce the connection creati
     1. to reduce the lock duration we usually move out the code out of synchronorization block, that doesnt require a lock (especially an IO)
     2. Lock splitting: split lockl code into lower granularity such that it will processed on two locks and duration on which these locks will be held is also reduceed.
     3. Lock Stripping: Split locks for each partition of data like in concurrent hashmap.
+    4. Compare and Swap mechanism - it is basically the optimisitic locking mechanism which is used by operating system, java implements it by using atomic classes from java.util.concurrent.atomic.* . this basically does the same thing what is done optimistic locking basically we compare and set the values if the compare is false it need to recheck the values and does this till gets compare value to true.
+
+- Dead locks - 
+- coherence delays - 
 
 -------------------------------
 
