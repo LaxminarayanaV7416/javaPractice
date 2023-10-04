@@ -41,3 +41,5 @@
 1. [markdown cheatsheet link](https://www.markdownguide.org/cheat-sheet/)
 2. [presentation using JS](https://revealjs.com/)
 3. [Java Cheat sheet Jv11](https://introcs.cs.princeton.edu/java/11cheatsheet/)
+4. [JAR vs WAR vs EAR](https://medium.com/@ravi29shekhar/what-is-basically-jar-war-ear-file-in-java-b7beeb51bebb#:~:text=The%20.-,jar%20files%20contain%20libraries%2C%20resources%20and%20accessories%20files%20like%20property,needed%20to%20run%20the%20application.)
+5. 

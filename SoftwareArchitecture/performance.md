@@ -146,8 +146,11 @@ Approaches to solve the network latency - We cannot reduce the connection creati
     3. Lock Stripping: Split locks for each partition of data like in concurrent hashmap.
     4. Compare and Swap mechanism - it is basically the optimisitic locking mechanism which is used by operating system, java implements it by using atomic classes from java.util.concurrent.atomic.* . this basically does the same thing what is done optimistic locking basically we compare and set the values if the compare is false it need to recheck the values and does this till gets compare value to true.
 
-- Dead locks - 
-- coherence delays - 
+- Dead locks - there are twp type of deadlocks
+    * Lock ordering related - this occurs when x is trying to transfer amount to y and simultaneously same y is also doing same will result in deadlock since both services are lock acquired and no communication between them due to thread lock. To aovid this dead locks we will come up with fixed global order which is kind of priortiy queue or we can sort the accounts by account number which way we can avoid locking on orders for both accounts.
+    * Request Load related - if we asssume that there are two servers and these two servers are directed through single gateway service and even the user requests are also accepted by the gateway service. and assume that service 1 is calling the service 2 and the service 2 gets the request from service 1 thorugh gateway. this architecture is fully acccptable until no more requests from users, if we assume users are increased as number of threads present in gateway so now service 1 is called with no free threads in gateway and service 2 is no way to recive the request from service 1 since no free threads in gateway, which are always see deadlocked.
+- coherence delays - this can be solved by using the volatile variables (java concept) and by using the locking which means we are doing the process in synchronization.
+
 
 -------------------------------
 
